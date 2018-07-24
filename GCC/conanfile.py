@@ -23,7 +23,7 @@ class NcomDecoderPackageConan(ConanFile):
         self.run("ar rcs libNComRxC.a NCOMdecoder\\nav\\bin\\NComRxC.o")
 
     def package(self):
-        self.copy("NCOMdecoder\\nav\\*.h", dst="include")
+        self.copy("NCOMdecoder\\nav\\*.h", dst="include", keep_path=False)
         self.copy("*.a", dst="lib", keep_path=False)
 
     def package_info(self):

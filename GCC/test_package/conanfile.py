@@ -8,10 +8,11 @@ class NcomdecoderpackageTestConan(ConanFile):
     generators = "compiler_args"
 
     def build(self):
-        print("hello man, were about to make a test application!")
-        self.run("gcc ..\..\example.c conanbuildinfo.args -o example")
+        # self.run("dir")
+        print("hello my man, were about to make a test application!")
+        self.run("more conanbuildinfo.args")
+        self.run("gcc ..\..\example.c @conanbuildinfo.args -o example")
 
     def test(self):
         if not tools.cross_building(self.settings):
-            os.chdir("bin")
-            self.run(".%sexample" % os.sep)
+            self.run("example.exe ..\..\test_file")
