@@ -28,9 +28,9 @@ class NcomDecoderPackageConan(ConanFile):
 
         elif self.settings.compiler == "gcc":
             self.output.info("Starting build for gcc")
-            self.run("mkdir NCOMdecoder\\nav\\bin")
-            self.run("gcc -c NCOMdecoder\\nav\\NComRxC.c -o NCOMdecoder\\nav\\bin\\NComRxC.o")
-            self.run("ar rcs libNComRxC.a NCOMdecoder\\nav\\bin\\NComRxC.o")
+            self.run("mkdir NCOMdecoder\\src\\bin")
+            self.run("gcc -c NCOMdecoder\\src\\NComRxC.c -o NCOMdecoder\\src\\bin\\NComRxC.o")
+            self.run("ar rcs libNComRxC.a NCOMdecoder\\src\\bin\\NComRxC.o")
         else:
             self.output.info("Compiler not supported in recipe")
             exit()
