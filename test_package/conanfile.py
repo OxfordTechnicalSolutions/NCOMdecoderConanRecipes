@@ -11,9 +11,9 @@ class NcomdecoderpackageTestConan(ConanFile):
         self.output.info("+++++++++Building test application+++++++++")
         if self.settings.compiler == "Visual Studio":
             self.output.info("Starting build for visual studio")
-            self.run("dir")
             msbuild = MSBuild(self)
-            path = os.getcwd() + r"\NCOMdecoder\MSVC_2017\NComRxC.sln"
+            path = os.getcwd() + r"\..\..\test_application.sln"
+            print(path)
             msbuild.build(path, upgrade_project=False)
 
         elif self.settings.compiler == "gcc":
