@@ -8,7 +8,7 @@ class NcomdecoderpackageTestConan(ConanFile):
     generators = "compiler_args","visual_studio"
 
     def build(self):
-        self.output.info("+++++++++Building test application+++++++++")
+        self.output.info("Building test application")
         if self.settings.compiler == "Visual Studio":
             self.output.info("Starting build for visual studio")
             msbuild = MSBuild(self)
@@ -23,6 +23,12 @@ class NcomdecoderpackageTestConan(ConanFile):
         else:
             self.output.info("Compiler not supported in recipe")
             exit()
+            
     def test(self):
-        self.output.info("+++++++++Starting build+++++++++")
-        self.run("example.exe ..\\..\\test_file.ncom ..\\..\\output.csv")
+        self.output.info("Running test application")
+        if self.settings.compiler == "Visual Studio":
+            self.run("\\..\\..\\x64\\Release\\test_application.exe ..\\..\\test_file.ncom ..\\..\\output.csv")
+        elif self.settings.compiler == "gcc":
+            self.run("example.exe ..\\..\\test_file.ncom ..\\..\\output.csv")
+        else:
+            self.output.info("Compiler not supported in recipe")
