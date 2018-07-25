@@ -1,0 +1,33 @@
+[settings]
+    arch=x86_64
+    build_type=Release
+    compiler=Visual Studio
+    compiler.runtime=MD
+    compiler.version=15
+    os=Windows
+
+[requires]
+    NcomDecoderPackageConan/0.1
+
+[options]
+
+
+[full_settings]
+    arch=x86_64
+    build_type=Release
+    compiler=Visual Studio
+    compiler.runtime=MD
+    compiler.version=15
+    os=Windows
+
+[full_requires]
+    NcomDecoderPackageConan/0.1@0.1/beta:6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7
+
+[full_options]
+    NcomDecoderPackageConan:shared=False
+
+[recipe_hash]
+
+
+[env]
+    VCTargetsPath=C:/Program Files (x86)/MSBuild/Microsoft.Cpp/v4.0/v140

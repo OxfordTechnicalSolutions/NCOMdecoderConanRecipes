@@ -55,8 +55,15 @@ int main(
 	// Output the header and the Development ID
 	printf("NcomToCsv: Converts NCom file data to text. (ID: " MAIN_DEV_ID ")\n");
 
+	// Check the command line for 2 or 3 user parameters
+	if(argc !=3 && argc != 4)
+	{
+		fprintf(stderr, "Usage: NcomToCsv <input file> <output file> [<trig_file>]\n");
+		exit(EXIT_FAILURE);
+	}
+
 	// Open the input file
-	fpin = fopen("test_file.ncom", "rb");
+	fpin = fopen(argv[1], "rb");
 	if(fpin == NULL)
 	{
 		fprintf(stderr, "Error: Could not open input file '%s'.\n", argv[1]);
@@ -64,7 +71,7 @@ int main(
 	}
 
 	// Open the output file
-	fpout = fopen("test_output.csv", "wt");
+	fpout = fopen(argv[2], "wt");
 	if(fpout == NULL)
 	{
 		fprintf(stderr, "Error: Could not open output file '%s'.\n", argv[2]);
@@ -232,6 +239,37 @@ static void print(FILE *fp, const NComRxC *nrx)
 									" ISO v.s. roll acceleration(deg/s²),"
 									" ISO v.s. pitch acceleration(deg/s²),"
 									" ISO v.s. yaw acceleration(deg/s²),"
+									// " Acceleration filtered Xv(m/s²),"
+									// " Acceleration filtered Yv(m/s²),"
+									// " Acceleration filtered Zv(m/s²),"
+									// " Acceleration filtered forward(m/s²),"
+									// " Acceleration filtered lateral(m/s²),"
+									// " Acceleration filtered down(m/s²),"
+									// " ISO e.f.s. east filtered acceleration(m/s²),"
+									// " ISO e.f.s. north filtered acceleration(m/s²),"
+									// " ISO e.f.s. vertical filtered acceleration(m/s²),"
+									// " ISO i.s. longitudinal filtered acceleration(m/s²),"
+									// " ISO i.s. lateral filtered acceleration(m/s²),"
+									// " ISO i.s. vertical filtered acceleration(m/s²),"
+									// " ISO v.s. longitudinal filtered acceleration(m/s²),"
+									// " ISO v.s. lateral filtered acceleration(m/s²),"
+									// " ISO v.s. vertical filtered acceleration(m/s²),"
+									// " Angular acceleration filtered Xv(deg/s²),"
+									// " Angular acceleration filtered Yv(deg/s²),"
+									// " Angular acceleration filtered Zv(deg/s²),"
+									// " Angular acceleration filtered forward(deg/s²),"
+									// " Angular acceleration filtered lateral(deg/s²),"
+									// " Angular acceleration filtered down(deg/s²),"
+									// " ISO e.f.s. roll filtered acceleration(deg/s²),"
+									// " ISO e.f.s. pitch filtered acceleration(deg/s²),"
+									// " ISO e.f.s. yaw filtered acceleration(deg/s²),"
+									// " ISO i.s. roll filtered acceleration(deg/s²),"
+									// " ISO i.s. pitch filtered acceleration(deg/s²),"
+									// " ISO i.s. yaw filtered acceleration(deg/s²),"
+									// " ISO v.s. roll filtered acceleration(deg/s²),"
+									// " ISO v.s. pitch filtered acceleration(deg/s²),"
+									// " ISO v.s. yaw filtered acceleration(deg/s²),"
+
 		);
 	  fprintf(fp, "\n");
 		HeaderWritten = 1;
@@ -433,6 +471,23 @@ static void print(FILE *fp, const NComRxC *nrx)
 		if(nrx->mIsIsoRollValid) fprintf(fp, "%.2f",nrx->mIsoRoll);
 		fprintf(fp, ",");
 
+		// // Print the 	AngleSlip (deg)
+		// if(nrx->mIsSlipValid) fprintf(fp, "%.3f",nrx->mSlip);
+		// fprintf(fp, ",");
+
+		// // Print the 	AngleTrack (deg) edited for +ve measurments only
+		// if(nrx->mIsTrackValid)
+		// {
+		// 	if(nrx->mTrack<0) fprintf(fp, "%.3f",360 + nrx->mTrack); else fprintf(fp, "%.3f",nrx->mTrack);
+		// }
+		// fprintf(fp, ",");
+
+		// // Print the 	Curvature (1/m)
+		// if(nrx->mIsCurvatureValid) fprintf(fp, "%.4f",nrx->mCurvature);
+		// fprintf(fp, ",");
+
+		// Print the 	AngleLocalYaw (deg)
+
 		// Print the 	AngleRateX (deg/s)
 		if(nrx->mIsWxValid) fprintf(fp, "%.3f",nrx->mWx);
 		fprintf(fp, ",");
@@ -552,6 +607,220 @@ static void print(FILE *fp, const NComRxC *nrx)
 		//Print "ISO v.s. yaw acceleration(deg/s²),"
 		if(nrx->mIsIsoYoZValid) fprintf(fp, "%.3f",nrx->mIsoYoZ);
 		fprintf(fp, ",");
+
+
+
+		// // Print the 	filtered	AccelX (m/s²)
+		// if(nrx->mIsFiltAxValid) fprintf(fp, "%.3f",nrx->mFiltAx);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	filtered	AccelY (m/s²)
+		// if(nrx->mIsFiltAyValid) fprintf(fp, "%.3f",nrx->mFiltAy);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	filtered	AccelZ (m/s²)
+		// if(nrx->mIsFiltAzValid) fprintf(fp, "%.3f",nrx->mFiltAz);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	filtered	AccelForward (m/s²)
+		// if(nrx->mIsFiltAfValid) fprintf(fp, "%.3f",nrx->mFiltAf);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	filtered	AccelLateral (m/s²)
+		// if(nrx->mIsFiltAlValid) fprintf(fp, "%.3f",nrx->mFiltAl);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	filtered	AccelDown (m/s²)
+		// if(nrx->mIsFiltAdValid) fprintf(fp, "%.3f",nrx->mFiltAd);
+		// fprintf(fp, ",");
+		//
+		//
+		//
+		// // Print the 	filtered AccelX (m/s²)
+		// if(nrx->mIsFiltAxValid) fprintf(fp, "%.3f",nrx->mFiltAx);
+		// fprintf(fp, ",");
+		//
+		// // Print the filtered	AccelY (m/s²)
+		// if(nrx->mIsFiltAyValid) fprintf(fp, "%.3f",nrx->mFiltAy);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	filtered	AccelZ (m/s²)
+		// if(nrx->mIsFiltAzValid) fprintf(fp, "%.3f",nrx->mFiltAz);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	filtered	AccelForward (m/s²)
+		// if(nrx->mIsFiltAfValid) fprintf(fp, "%.3f",nrx->mFiltAf);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	filtered	AccelLateral (m/s²)
+		// if(nrx->mIsFiltAlValid) fprintf(fp, "%.3f",nrx->mFiltAl);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	filtered	AccelDown (m/s²)
+		// if(nrx->mIsFiltAdValid) fprintf(fp, "%.3f",nrx->mFiltAd);
+		// fprintf(fp, ",");
+		//
+		//
+		// // " ISO e.f.s. east filtered acceleration(m/s²),"
+		// if(nrx->mIsFiltIsoAnXValid) fprintf(fp, "%.3f",nrx->mFiltIsoAnX);
+		// fprintf(fp, ",");
+		//
+		// // " ISO e.f.s. north filtered acceleration(m/s²),"
+		// if(nrx->mIsFiltIsoAnYValid) fprintf(fp, "%.3f",nrx->mFiltIsoAnY);
+		// fprintf(fp, ",");
+		//
+		// // " ISO e.f.s. vertical filtered acceleration(m/s²),"
+		// if(nrx->mIsFiltIsoAnZValid) fprintf(fp, "%.3f",nrx->mFiltIsoAnZ);
+		// fprintf(fp, ",");
+		//
+		// // " ISO i.s. longitudinal filtered acceleration(m/s²),"
+		// if(nrx->mIsFiltIsoAhXValid) fprintf(fp, "%.3f",nrx->mFiltIsoAhX);
+		// fprintf(fp, ",");
+		//
+		// // " ISO i.s. lateral filtered acceleration(m/s²),"
+		// if(nrx->mIsFiltIsoAhYValid) fprintf(fp, "%.3f",nrx->mFiltIsoAhY);
+		// fprintf(fp, ",");
+		//
+		// // " ISO i.s. vertical filtered acceleration(m/s²),"
+		// if(nrx->mIsFiltIsoAhZValid) fprintf(fp, "%.3f",nrx->mFiltIsoAhZ);
+		// fprintf(fp, ",");
+		//
+		// // " ISO v.s. longitudinal filtered acceleration(m/s²),"
+		// if(nrx->mIsFiltIsoAoXValid) fprintf(fp, "%.3f",nrx->mFiltIsoAoX);
+		// fprintf(fp, ",");
+		//
+		// // " ISO v.s. lateral filtered acceleration(m/s²),"
+		// if(nrx->mIsFiltIsoAoYValid) fprintf(fp, "%.3f",nrx->mFiltIsoAoY);
+		// fprintf(fp, ",");
+		//
+		// // " ISO v.s. vertical filtered acceleration(m/s²),"
+		// if(nrx->mIsFiltIsoAoZValid) fprintf(fp, "%.3f",nrx->mFiltIsoAoZ);
+		// fprintf(fp, ",");
+		//
+		//
+		//
+		// // Print the 	Filtered AngAccelX (deg/s²)
+		// if(nrx->mIsFiltYxValid) fprintf(fp, "%.3f",nrx->mFiltYx);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	Filtered AngAccelY (deg/s²)
+		// if(nrx->mIsFiltYyValid) fprintf(fp, "%.3f",nrx->mFiltYy);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	Filtered AngAccelZ (deg/s²)
+		// if(nrx->mIsFiltYzValid) fprintf(fp, "%.3f",nrx->mFiltYz);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	Filtered AngAccelForward (deg/s²)
+		// if(nrx->mIsFiltYfValid) fprintf(fp, "%.3f",nrx->mFiltYf);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	Filtered AngAccelLateral (deg/s²)
+		// if(nrx->mIsFiltYlValid) fprintf(fp, "%.3f",nrx->mFiltYl);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	Filtered AngAccelDown (deg/s²)
+		// if(nrx->mIsFiltYdValid) fprintf(fp, "%.3f",nrx->mFiltYd);
+		// fprintf(fp, ",");
+		//
+		//
+		//
+		//
+		// // " ISO e.f.s. roll filtered acceleration(deg/s²),"
+		// if(nrx->mIsFiltIsoYnXValid) fprintf(fp, "%.3f",nrx->mFiltIsoYnX);
+		// fprintf(fp, ",");
+		//
+		// // " ISO e.f.s. pitch filtered acceleration(deg/s²),"
+		// if(nrx->mIsFiltIsoYnYValid) fprintf(fp, "%.3f",nrx->mFiltIsoYnY);
+		// fprintf(fp, ",");
+		//
+		// // " ISO e.f.s. yaw filtered acceleration(deg/s²),"
+		// if(nrx->mIsFiltIsoYnZValid) fprintf(fp, "%.3f",nrx->mFiltIsoYnZ);
+		// fprintf(fp, ",");
+		//
+		// // " ISO i.s. roll filtered acceleration(deg/s²),"
+		// if(nrx->mIsFiltIsoYhXValid) fprintf(fp, "%.3f",nrx->mFiltIsoYhX);
+		// fprintf(fp, ",");
+		//
+		// // " ISO i.s. pitch filtered acceleration(deg/s²),"
+		// if(nrx->mIsFiltIsoYhYValid) fprintf(fp, "%.3f",nrx->mFiltIsoYhY);
+		// fprintf(fp, ",");
+		//
+		// // " ISO i.s. yaw filtered acceleration(deg/s²),"
+		// if(nrx->mIsFiltIsoYhZValid) fprintf(fp, "%.3f",nrx->mFiltIsoYhZ);
+		// fprintf(fp, ",");
+		//
+		// // " ISO v.s. roll filtered acceleration(deg/s²),"
+		// if(nrx->mIsFiltIsoYoXValid) fprintf(fp, "%.3f",nrx->mFiltIsoYoX);
+		// fprintf(fp, ",");
+		//
+		// // " ISO v.s. pitch filtered acceleration(deg/s²),"
+		// if(nrx->mIsFiltIsoYoYValid) fprintf(fp, "%.3f",nrx->mFiltIsoYoY);
+		// fprintf(fp, ",");
+		//
+		// // " ISO v.s. yaw filtered acceleration(deg/s²),"
+		// if(nrx->mIsFiltIsoYoZValid) fprintf(fp, "%.3f",nrx->mFiltIsoYoZ);
+		// fprintf(fp, ",");
+
+
+
+
+
+		// // Print the 	PosLatStdev (m)
+		// if(nrx->mIsNorthAccValid) fprintf(fp, "%.3f",nrx->mNorthAcc);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	PosLonStdev (m)
+		// if(nrx->mIsEastAccValid) fprintf(fp, "%.3f",nrx->mEastAcc);
+		// fprintf(fp, ",");
+
+		// // Print the 	PosAltStdev (m)
+		// if(nrx->mIsAltAccValid) fprintf(fp, "%.3f",nrx->mAltAcc);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	VelNorthStdev (km/h)
+		// if(nrx->mIsVnAccValid) fprintf(fp, "%.3f",(nrx->mVnAcc)*MPS2KMPH);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	VelEastStdev (km/h)
+		// if(nrx->mIsVeAccValid) fprintf(fp, "%.3f",(nrx->mVeAcc)*MPS2KMPH);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	VelDownStdev (km/h)
+		// if(nrx->mIsVdAccValid) fprintf(fp, "%.3f",(nrx->mVdAcc)*MPS2KMPH);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	AngleHeadingStdev (deg)
+		// if(nrx->mIsHeadingAccValid) fprintf(fp, "%.3f",nrx->mHeadingAcc);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	AnglePitchStdev (deg)
+		// if(nrx->mIsPitchAccValid) fprintf(fp, "%.3f",nrx->mPitchAcc);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	AngleRollStdev (deg)
+		// if(nrx->mIsRollAccValid) fprintf(fp, "%.3f",nrx->mRollAcc);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	GpsPosMode
+		// if(nrx->mIsGpsPosModeValid) fprintf(fp, "%s",NComGetGpsPosModeString(nrx));
+		// fprintf(fp, ",");
+		//
+		// // Print the 	GpsVelMode
+		// if(nrx->mIsGpsVelModeValid) fprintf(fp, "%s",NComGetGpsVelModeString(nrx));
+		// fprintf(fp, ",");
+		//
+		// // Print the 	GpsAttMode
+		// if(nrx->mIsGpsAttModeValid) fprintf(fp, "%s",NComGetGpsAttModeString(nrx));
+		// fprintf(fp, ",");
+		//
+		// // Print the 	GpsNumSats
+		// if(nrx->mIsGpsNumObsValid) fprintf(fp, "%i",nrx->mGpsNumObs);
+		// fprintf(fp, ",");
+		//
+		// // Print the 	GpsDiffAge (s)
+		// if(nrx->mIsGpsDiffAgeValid) fprintf(fp, "%.1f",nrx->mGpsDiffAge);
+		// fprintf(fp, ",");
 
 		fprintf(fp, "\n");
 	}
